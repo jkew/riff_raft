@@ -93,7 +93,7 @@ am__installdirs = "$(DESTDIR)$(libdir)" \
 LTLIBRARIES = $(lib_LTLIBRARIES)
 libriff_raft_1_0_la_LIBADD =
 am_libriff_raft_1_0_la_OBJECTS = riff_raft.lo leader.lo follower.lo \
-	candidate.lo
+	candidate.lo list.lo util.lo
 libriff_raft_1_0_la_OBJECTS = $(am_libriff_raft_1_0_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -276,9 +276,9 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 lib_LTLIBRARIES = libriff_raft-1.0.la
-libriff_raft_1_0_la_SOURCES = riff_raft.c leader.c follower.c candidate.c
+libriff_raft_1_0_la_SOURCES = riff_raft.c leader.c follower.c candidate.c list.c util.c
 library_includedir = $(includedir)/riff_raft-1.0/riff_raft
-library_include_HEADERS = include/riff_raft.h
+library_include_HEADERS = include/riff_raft.h include/list.h include/util.h
 all: all-am
 
 .SUFFIXES:
@@ -360,7 +360,9 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/candidate.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/follower.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/leader.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/list.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/riff_raft.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util.Plo@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
