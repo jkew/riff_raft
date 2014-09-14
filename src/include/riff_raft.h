@@ -41,6 +41,6 @@ typedef struct {
 } message;
 
 void init_state();
-void next_states();
+void next_state(message *msg);
 
 #endif

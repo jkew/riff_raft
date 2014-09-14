@@ -1,6 +1,7 @@
 #ifndef RRFOLLOWER
 #define RRFOLLOWER
 #include "riff_raft.h"
-void recv(message);
+
+state * follower_next_state(state *current, message *msg);
 
 #endif
