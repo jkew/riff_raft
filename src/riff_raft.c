@@ -1,10 +1,10 @@
 #include <stdlib.h>
 #include <include/riff_raft.h>
 
-state *current;
+node_state *current;
 
 void init_state() {
-  current = malloc(sizeof(state));
+  current = malloc(sizeof(node_state));
   current->role = CANDIDATE;
 }
 

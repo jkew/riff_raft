@@ -73,8 +73,32 @@ void test_itr() {
   clearl(list);
 }
 
+void test_get() {
+  list = new_list();
+  int MAX_SIZE = 10;
+  for (int i = 0; i < MAX_SIZE; i++) {
+      int *val = malloc(sizeof(int));
+      *val = i;
+      pushv(list, val);
+      assert(list->tail != 0);
+      assert(*((int *) list->tail->value) == 0);
+      assert(*((int *) list->head->value) == i);
+      // We are pushing; so get the values in reverse
+      for (int check = i; check >= 0; check--) {
+        int *got = list_get(list, check);
+        assert((*got) == (i - check));
+      }
+  }
+  // out of bounds => return null
+  assert(list_get(list, MAX_SIZE) == NULL);
+  void *val = 0;
+  while ((val = popv(list))) free(val);
+  clearl(list);
+}
+
 int main() {
  test_clear();
  test_itr();
+ test_get();
  return 0;
 }

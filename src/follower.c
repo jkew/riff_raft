@@ -3,7 +3,7 @@
 #include "include/common.h"
 #include "include/follower.h"
 
-void follower_next_state(state *current, message *msg) {
+void follower_next_state(node_state *current, message *msg) {
   common_next_state(current, msg);
   handle_append_entry(current, msg);
   handle_request_vote(current, msg);

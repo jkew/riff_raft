@@ -2,6 +2,6 @@
 #define RRFOLLOWER
 #include "riff_raft.h"
 
-state * follower_next_state(state *current, message *msg);
+node_state * follower_next_state(node_state *current, message *msg);
 
 #endif
