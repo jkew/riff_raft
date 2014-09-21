@@ -13,8 +13,7 @@ enum command_type {
   APPEND,
   ELECTION,
   HEARTBEAT,
-  REPLY_FALSE,
-  REPLY_TRUE,
+  REPLY,
   GET,
   SET
 };
@@ -42,8 +41,27 @@ typedef struct {
   long term;
   int from;
   int to;
-  char *data;
+  void *args;
 } message;
+
+typedef struct {
+  int leader_id;
+  int prev_log_index;
+  int prev_log_term;
+  log_entry entry; // may send more than one for efficiency
+  int leader_commit_index;
+} append_entries_args;
+
+typedef struct {
+  int candidate_id;
+  int last_log_index;
+  int last_log_term;
+} request_vote_args;
+
+typedef struct {
+  bool success;
+} message_reply;
+
 
 void reply_false(message *msg, node_state *current);
 void reply_true(message *msg, node_state *current);

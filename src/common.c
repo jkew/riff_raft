@@ -2,6 +2,7 @@
 #include "include/riff_raft.h"
 #include "include/common.h"
 #include "include/util.h"
+#include "include/list.h"
 
 node_state * handle_term_check(node_state *current, message *msg);
 
@@ -18,10 +19,15 @@ node_state * handle_append_entry(node_state *current, message *msg) {
   if (!handle_term_check(current, msg)) { return current; }
   // 2. Reply false if log doesn’t contain an entry at prevLogIndex
   //    whose term matches prevLogTerm (§5.3)
-  current->log.
+  append_entries_args * args = ((append_entries_args *) msg->args);
+  log_entry * curr_entry = list_get(current->log, args->prev_log_index );
+  if (curr_entry == NULL || curr_entry->term != args->prev_log_term) {
+    reply_false(msg, current);
+  }
   // 3. If an existing entry conflicts with a new one (same index
   //    but different terms), delete the existing entry and all that
   //    follow it (§5.3)
+
   // 4. Append any new entries not already in the log
   // 5. If leaderCommit > commitIndex, set commitIndex =
   //    min(leaderCommit, index of last new entry)
