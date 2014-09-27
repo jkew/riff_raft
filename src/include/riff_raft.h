@@ -28,10 +28,10 @@ typedef struct {
   long commit_index;
   int last_applied;
   int myid;
-  list_ref *next_index;
-  list_ref *match_index;
   long current_term;
   int voted_for;
+  list_ref *next_index;
+  list_ref *match_index;
   list_ref *log;
 } node_state;
 
@@ -68,5 +68,8 @@ void reply_true(message *msg, node_state *current);
 void forward_message(int leader, message *msg);
 void init_state();
 void next_state(message *msg);
+node_state * new_state();
+void discard_state(node_state * state);
+bool state_equals(node_state * r, node_state *l);
 
 #endif

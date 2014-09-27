@@ -49,8 +49,10 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-check_PROGRAMS = test_list$(EXEEXT) test_handle_append_entry$(EXEEXT)
-TESTS = test_list$(EXEEXT) test_handle_append_entry$(EXEEXT)
+check_PROGRAMS = test_list$(EXEEXT) test_handle_append_entry$(EXEEXT) \
+	test_riff_raft$(EXEEXT)
+TESTS = test_list$(EXEEXT) test_handle_append_entry$(EXEEXT) \
+	test_riff_raft$(EXEEXT)
 subdir = test
 DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
 	$(top_srcdir)/config/depcomp $(top_srcdir)/config/test-driver
@@ -73,6 +75,9 @@ am__v_lt_1 =
 am_test_list_OBJECTS = test_list.$(OBJEXT)
 test_list_OBJECTS = $(am_test_list_OBJECTS)
 test_list_DEPENDENCIES = ../src/libriff_raft-1.0.la
+am_test_riff_raft_OBJECTS = test_riff_raft.$(OBJEXT)
+test_riff_raft_OBJECTS = $(am_test_riff_raft_OBJECTS)
+test_riff_raft_DEPENDENCIES = ../src/libriff_raft-1.0.la
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -107,9 +112,10 @@ AM_V_CCLD = $(am__v_CCLD_@AM_V@)
 am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
-SOURCES = $(test_handle_append_entry_SOURCES) $(test_list_SOURCES)
+SOURCES = $(test_handle_append_entry_SOURCES) $(test_list_SOURCES) \
+	$(test_riff_raft_SOURCES)
 DIST_SOURCES = $(test_handle_append_entry_SOURCES) \
-	$(test_list_SOURCES)
+	$(test_list_SOURCES) $(test_riff_raft_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -453,32 +459,12 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-#test_lock_SOURCES = test_lock.c test_common.c
-#test_lock_LDADD = ../src/libintheory-1.0.la
-#test_proposer_SOURCES = test_proposer.c test_common.c
-#test_proposer_LDADD = ../src/libintheory-1.0.la
-#test_acceptor_SOURCES = test_acceptor.c test_common.c 
-#test_acceptor_LDADD = ../src/libintheory-1.0.la
-#test_learner_SOURCES = test_learner.c test_common.c 
-#test_learner_LDADD = ../src/libintheory-1.0.la
-#test_network_nodes_SOURCES = test_network_nodes.c test_common.c 
-#test_network_nodes_LDADD = ../src/libintheory-1.0.la
-#test_network_SOURCES = test_network.c test_common.c 
-#test_network_LDADD = ../src/libintheory-1.0.la
-#test_network_server_SOURCES = test_network_server.c test_common.c 
-#test_network_server_LDADD = ../src/libintheory-1.0.la
-#test_integration_SOURCES = test_integration.c test_common.c 
-#test_integration_LDADD = ../src/libintheory-1.0.la
-#test_4node_count_SOURCES = test_4node_count.c test_4node_common.c
-#test_4node_count_LDADD = ../src/libintheory-1.0.la
-#test_4node_contenious_count_SOURCES = test_4node_contenious_count.c test_4node_common.c
-#test_4node_contenious_count_LDADD = ../src/libintheory-1.0.la
-#test_store_SOURCES = test_store.c
-#test_store_LDADD = ../src/libintheory-1.0.la
 test_list_SOURCES = test_list.c
 test_list_LDADD = ../src/libriff_raft-1.0.la
 test_handle_append_entry_SOURCES = test_handle_append_entry.c
 test_handle_append_entry_LDADD = ../src/libriff_raft-1.0.la
+test_riff_raft_SOURCES = test_riff_raft.c
+test_riff_raft_LDADD = ../src/libriff_raft-1.0.la
 all: all-am
 
 .SUFFIXES:
@@ -528,6 +514,9 @@ test_handle_append_entry$(EXEEXT): $(test_handle_append_entry_OBJECTS) $(test_ha
 test_list$(EXEEXT): $(test_list_OBJECTS) $(test_list_DEPENDENCIES) $(EXTRA_test_list_DEPENDENCIES) 
 	@rm -f test_list$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(test_list_OBJECTS) $(test_list_LDADD) $(LIBS)
+test_riff_raft$(EXEEXT): $(test_riff_raft_OBJECTS) $(test_riff_raft_DEPENDENCIES) $(EXTRA_test_riff_raft_DEPENDENCIES) 
+	@rm -f test_riff_raft$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(test_riff_raft_OBJECTS) $(test_riff_raft_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -537,6 +526,7 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_handle_append_entry.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_list.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_riff_raft.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -768,6 +758,13 @@ test_list.log: test_list$(EXEEXT)
 test_handle_append_entry.log: test_handle_append_entry$(EXEEXT)
 	@p='test_handle_append_entry$(EXEEXT)'; \
 	b='test_handle_append_entry'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
+test_riff_raft.log: test_riff_raft$(EXEEXT)
+	@p='test_riff_raft$(EXEEXT)'; \
+	b='test_riff_raft'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
