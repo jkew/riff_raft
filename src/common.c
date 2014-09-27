@@ -14,6 +14,7 @@ node_state * common_next_state(node_state *current, message *msg) {
 
 }
 
+
 node_state * handle_append_entry(node_state *current, message *msg) {
   //TODO: Q. Do only followers handle this one?
 
@@ -26,11 +27,11 @@ node_state * handle_append_entry(node_state *current, message *msg) {
   // 2. Reply false if log doesn’t contain an entry at prevLogIndex
   //    whose term matches prevLogTerm (§5.3) and do not append the new entries
   append_entries_args * args = ((append_entries_args *) msg->args);
-  log_entry * curr_entry = list_get(current->log, args->prev_log_index );
-  if (curr_entry == NULL || curr_entry->term != args->prev_log_term) {
+  log_entry * last_entry = list_get(current->log, args->prev_log_index );
+  if (last_entry == NULL || last_entry->term != args->prev_log_term) {
     // Our log is out of sync with the current leader; we do not have the
-    // intermediate log entries.
-    //TODO:  Q. How do we resync the log?
+    // intermediate log entries, or we are receiving old log messages from
+    // an old leader
     reply_false(msg, current);
     return DONE;
   }
@@ -41,6 +42,11 @@ node_state * handle_append_entry(node_state *current, message *msg) {
   //TODO: Q. Which index is associated with the new entry?
   log_entry new_entry = args->entry;
   int current_index = args->prev_log_index + 1;
+  log_entry * curr_entry = list_get(current->log, current_index );
+  if (curr_entry != NULL || curr_entry->term != new_entry.term) {
+
+  }
+
   // 4. Append any new entries not already in the log
   // 5. If leaderCommit > commitIndex, set commitIndex =
   //    min(leaderCommit, index of last new entry)

@@ -1,4 +1,4 @@
-check_PROGRAMS = test_list
+check_PROGRAMS = test_list test_handle_append_entry
 #test_lock_SOURCES = test_lock.c test_common.c
 #test_lock_LDADD = ../src/libintheory-1.0.la
 #test_proposer_SOURCES = test_proposer.c test_common.c
@@ -23,4 +23,6 @@ check_PROGRAMS = test_list
 #test_store_LDADD = ../src/libintheory-1.0.la
 test_list_SOURCES = test_list.c
 test_list_LDADD = ../src/libriff_raft-1.0.la
-TESTS = test_list
+test_handle_append_entry_SOURCES = test_handle_append_entry.c
+test_handle_append_entry_LDADD = ../src/libriff_raft-1.0.la
+TESTS = test_list test_handle_append_entry

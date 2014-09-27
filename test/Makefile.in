@@ -49,8 +49,8 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-check_PROGRAMS = test_list$(EXEEXT)
-TESTS = test_list$(EXEEXT)
+check_PROGRAMS = test_list$(EXEEXT) test_handle_append_entry$(EXEEXT)
+TESTS = test_list$(EXEEXT) test_handle_append_entry$(EXEEXT)
 subdir = test
 DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
 	$(top_srcdir)/config/depcomp $(top_srcdir)/config/test-driver
@@ -61,13 +61,18 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-am_test_list_OBJECTS = test_list.$(OBJEXT)
-test_list_OBJECTS = $(am_test_list_OBJECTS)
-test_list_DEPENDENCIES = ../src/libriff_raft-1.0.la
+am_test_handle_append_entry_OBJECTS =  \
+	test_handle_append_entry.$(OBJEXT)
+test_handle_append_entry_OBJECTS =  \
+	$(am_test_handle_append_entry_OBJECTS)
+test_handle_append_entry_DEPENDENCIES = ../src/libriff_raft-1.0.la
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
 am__v_lt_1 = 
+am_test_list_OBJECTS = test_list.$(OBJEXT)
+test_list_OBJECTS = $(am_test_list_OBJECTS)
+test_list_DEPENDENCIES = ../src/libriff_raft-1.0.la
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -102,8 +107,9 @@ AM_V_CCLD = $(am__v_CCLD_@AM_V@)
 am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
-SOURCES = $(test_list_SOURCES)
-DIST_SOURCES = $(test_list_SOURCES)
+SOURCES = $(test_handle_append_entry_SOURCES) $(test_list_SOURCES)
+DIST_SOURCES = $(test_handle_append_entry_SOURCES) \
+	$(test_list_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -471,6 +477,8 @@ top_srcdir = @top_srcdir@
 #test_store_LDADD = ../src/libintheory-1.0.la
 test_list_SOURCES = test_list.c
 test_list_LDADD = ../src/libriff_raft-1.0.la
+test_handle_append_entry_SOURCES = test_handle_append_entry.c
+test_handle_append_entry_LDADD = ../src/libriff_raft-1.0.la
 all: all-am
 
 .SUFFIXES:
@@ -514,6 +522,9 @@ clean-checkPROGRAMS:
 	list=`for p in $$list; do echo "$$p"; done | sed 's/$(EXEEXT)$$//'`; \
 	echo " rm -f" $$list; \
 	rm -f $$list
+test_handle_append_entry$(EXEEXT): $(test_handle_append_entry_OBJECTS) $(test_handle_append_entry_DEPENDENCIES) $(EXTRA_test_handle_append_entry_DEPENDENCIES) 
+	@rm -f test_handle_append_entry$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(test_handle_append_entry_OBJECTS) $(test_handle_append_entry_LDADD) $(LIBS)
 test_list$(EXEEXT): $(test_list_OBJECTS) $(test_list_DEPENDENCIES) $(EXTRA_test_list_DEPENDENCIES) 
 	@rm -f test_list$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(test_list_OBJECTS) $(test_list_LDADD) $(LIBS)
@@ -524,6 +535,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_handle_append_entry.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_list.Po@am__quote@
 
 .c.o:
@@ -749,6 +761,13 @@ recheck: all $(check_PROGRAMS)
 test_list.log: test_list$(EXEEXT)
 	@p='test_list$(EXEEXT)'; \
 	b='test_list'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
+test_handle_append_entry.log: test_handle_append_entry$(EXEEXT)
+	@p='test_handle_append_entry$(EXEEXT)'; \
+	b='test_handle_append_entry'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
